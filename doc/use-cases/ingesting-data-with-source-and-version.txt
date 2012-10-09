@@ -1,0 +1,62 @@
+Ingesting data into the object store with source and version provenance
+=======================================================================
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+
+Description
+-----------
+[NOTE]
+This is a draft document - not intended as a deliverable or distribution at
+this point. The goal is to support the model discussion and to capture issues
+raised during the discussions.
+
+source  Steve Poole
+Each fundamental unit of data transferred (even within a file), needs to 
+have its provenance tracked.
+
+source Gary Grider
+I think the lineage part comes from understanding what output was generated 
+from what stack of software.  If someone discovered that there was a flaw in
+some stack at some point, and decisions were made on that output that might be
+suspect, one could figure out how wide spread that issue might be.  So it
+really wasn't just check-pointing, more decision support.  It had to do with
+weapons certification, but seems to have general uses I would think.  Not sure
+about DoD, but a similar concept would seem to apply.
+
+Actors
+------
+1.  The object storage system
+2.  A user application that wishes to store data
+
+Assumptions
+-----------
+The object storage system is not currently filled to capacity
+
+Steps
+-----------
+1.  A user application is executed on a parallel computer as a group of 500
+tasks running on multiple compute nodes
+2.  The compute nodes have access to an I/O device that can generate more data
+than there exists memory on each compute node (e.g. 1TB per node)
+3.  The user application fills a buffer with data and sends it to the object
+storage system
+4.  The buffer is annotated with data describing the sensor that acquired the
+data, the location the data was collected, relevant software versions used to
+collect the data, and a descriptor describing the data format
+5.  The object storage system receives the data buffer and stores it
+persistently
+6.  The object storage includes the annotation data for the buffer within the
+storage system
+
+Variations
+----------
+1.  The user application may choose to annotate the data with fields other
+than those listed above
+2.  The user application may alter the user-side buffer size based on the
+performance characteristics of the underlying network, sensors, and storage
+media
+
+Issues
+------
+How do we trigger an error for this kind of use case.  What happens if the
+system fills during ingestion?

@@ -1,0 +1,26 @@
+
+User			Application			I/O System
+----			-----------			----------
+Loads data onto
+MR analysis system
+							Streaming writes
+
+Maps/Spawns App.
+Processes
+
+			Opens I/O Context
+			by name
+
+							Locates name
+
+			Reads data
+
+							Returns requested data
+
+			Performs data analysis
+
+			Closes I/O context
+
+			Returns result
+
+Examines result

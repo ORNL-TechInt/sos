@@ -1,0 +1,50 @@
+Multi-threaded access to a single data set
+==========================================
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+
+Description
+-----------
+[NOTE]
+This is a draft document - not intended as a deliverable or distribution at
+this point. The goal is to support the model discussion and to capture issues
+raised during the discussions.
+
+source DoD
+The forkthread.c benchmarking code.
+
+Actors
+------
+1.  The object storage system
+2.  A user application that wishes to read data
+
+Assumptions
+-----------
+The object storage system is filled with a 500TB data set
+
+Steps
+-----------
+1.  A user application is executed on a node as 1000 forked threads
+2.  Each thread begins reading 4KiB blocks from the data set at apparently
+random offsets
+3.1  During the I/O processing a Eureka condition is satisfied
+  4.1  The job completes successfully
+3.2  The job runs longer than a time limit (e.g. 1 day)
+  4.2  The job completes but is considered a failure
+4.  Job cleanup
+
+Variations
+----------
+1.  The I/O access size may range from 4KiB - 64KiB
+2.  The I/O access may occur on aligned boundaries
+
+
+Issues
+------
+1.  Efficiency is critical due to the time limited aspect of this job.  The
+more IOPs per hour the storage system supports, the greater the chance of job
+success
+2.  Past experiments have demonstrated that the number of extents used for the
+data set has impacted performance by more than 10% on an XFS file system
+3.  Alternative implementations for implementing this benchmark are an
+efficient mmap capability supported by the object storage system.

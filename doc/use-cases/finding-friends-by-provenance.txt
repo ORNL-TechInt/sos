@@ -1,0 +1,76 @@
+Finding Friends in a Social Network by Provenance
+=================================================
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+
+Description
+-----------
+[NOTE]
+This is a draft document - not intended as a deliverable or distribution at
+this point. The goal is to support the model discussion and to capture issues
+raised during the discussions.
+
+source Brad Settlemyer
+1.  It must be possible to locate chunks of data or entire files based
+on similarities between the provenance data (for example, data that
+originated from the same sub-nets).
+2.  It must be possible for the user to enumerate provenance data (e.g.
+Get a listing of all the source node names for a file or set of files).
+3.  It must be possible for the user to retrieve files simply by
+specifying the provenance data of interest.
+
+source Steve Poole
+
+
+Actors
+------
+1.  The object storage system
+2.  A social networking application that wishes to read data
+3.  A large group of end-users
+4.  Bob, a specific end-user
+
+Assumptions
+-----------
+The object storage system is filled with a 500TB data set that describes the
+social profiles for a universe of end-users.  The data describing the friend
+is stored directly in the object store, however during data entry, the storage
+system annotated the data with fields describing the ISP the data originated
+from, the type of web browser used for original data entry for each portion of
+the data.
+
+Steps
+-----------
+1.  Bob logs into his social networking application from his browser and
+  attempts to access his profile
+  1.1  The application determines the unique identifiers for Bob's profile
+    data and requests the profile data
+  1.2  The storage system returns the profile to the social application for 
+    formatted display
+2.  The user application looks at Bob's current IP address and attempts to
+  determine approximate physical location.  Based on that location, the
+  user-application attempts to find other active users near Bob.
+  2.1  Using Bob's current IP address, the application sends a request to the
+    storage system to find all profiles created in the last 24hrs that were
+    created in locations similar to Bob's current IP as determined by the IP 
+    address used to create the profiles.
+  2.2  The storage system responds with a set of data that describes the 
+    profiles that are both new, and likely created nearby
+3.  Bob realizes how much the social application knows about him, and
+  immediately begins investigating secure proxy software. 
+ 
+Variations
+----------
+1.  Profiles may be quite large, perhaps the query for nearby profiles does
+not return the whole profile, just a portion of the data
+2.  In this instance we have two search fields, recent creation and similar
+IPs.  How far reaching can we make the matching capabilities.  What matching
+types can we reasonably make fast.
+3.  In this scenario, it appears that all queries are known a-priori, this 
+does not have to be the case.  Users may generate custom queries later,
+and further, decide the query matters and want to construct an appropriate
+index to speed the query.
+
+
+Issues
+------
+1. TBD.

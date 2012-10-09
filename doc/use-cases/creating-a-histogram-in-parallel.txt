@@ -1,0 +1,63 @@
+Creating a histogram in parallel
+================================
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+
+Description
+-----------
+[NOTE]
+This is a draft document - not intended as a deliverable or distribution at
+this point. The goal is to support the model discussion and to capture issues
+raised during the discussions.
+
+source Steve Poole
+Consider how to construct a histogram of a large dataset in parallel
+
+source DoD
+Read a memory location, update it, and write it back.  Next, pick another
+memory location (but do it randomly), update it, and write it back.
+And do this over a range of memory locations that span a range of 1 to
+2 to the N, where N is a big number, like 30, or 32, or 34.
+
+Actors
+------
+1.  The object storage system
+2.  A user application that wishes to store data
+
+Assumptions
+-----------
+The object storage system contains a 500TB data set
+
+Steps
+-----------
+1.  A user application is executed on a parallel computer as a group of tasks
+running on multiple compute nodes
+2.  Each task is assigned a portion of the data set to construct a portion of
+a histogram (frequency count).  Each task must count the frequency of
+occurrence of each register-sized field within the data.  Therefore the
+histogram has a value domain from 0 to 2^64 and a range of 500*10^12/8.  The
+histogram is too large to fit into memory, so the histogram is mapped into
+storage.
+3.  For each encountered bit pattern in the dataset, a task must:
+  3.1  Read the existing histogram value
+  3.2  Increment the value by 1
+  3.3  Write the updated value atomically
+4.  When the entire data set has been analyzed, the job is complete.
+
+Variations
+----------
+1.  The histogram bin sizes may range from register-size to 64KiB
+2.  The user application may alter the user-side buffer size based on the
+performance characteristics of the underlying network, sensors, and storage
+media
+
+Issues
+------
+1.  Clearly something must be done to prevent multiple tasks from writing the
+same count to the file because they can't tell another task is updating the
+range. 
+2.  This job implies a very strong consistency constraint.  We need to
+determine more about this requirement.  Is caching viable on this access
+pattern? 
+
+

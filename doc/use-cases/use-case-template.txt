@@ -1,0 +1,39 @@
+Use Case Title
+==============
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+
+Description
+-----------
+[NOTE]
+This is a draft document - not intended as a deliverable or distribution at
+this point. The goal is to support the model discussion and to capture issues
+raised during the discussions.
+
+Goal to be achieved by use case and sources for requirement
+
+source Steve Smith
+This is sample use case description
+
+Actors
+------
+List of actors involved in use case
+
+Assumptions
+-----------
+Conditions that must be true for the use case to terminate correctly
+
+
+Steps
+-----------
+Interactions between actors and system that are necessary to achieve goal
+
+Variations
+----------
+Any variations in the steps of the use cases
+1.  TBD.
+
+Issues
+------
+List of issues remaining to be resolved
+1.  TBD.

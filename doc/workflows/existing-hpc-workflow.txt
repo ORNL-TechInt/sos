@@ -1,0 +1,28 @@
+
+User			Application			I/O System
+----			-----------			----------
+Spawns App.
+Processes
+			Opens I/O Context
+
+			Names I/O Context
+
+							Register's name
+
+			Queues write data
+
+							Begin's receiving
+							write data
+
+			Wait's for writes
+			to complete
+
+Observes file
+size to ensure 
+progress
+
+							Syncs data to disk
+
+			Closes context
+
+Back's up file data

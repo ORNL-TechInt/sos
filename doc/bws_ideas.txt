@@ -1,0 +1,22 @@
+These are ideas I think may be worth discussion, and don't want to forget.
+They may also stink.
+--
+
+1.  Perform coordinated I/O by requiring the application to allocate/pin the 
+object/file regions it wishes to write.  Thus ensuring no conflicts.  This is
+kindof lockish though, because there is state involved.  OTOH it's a pretty
+darn strong consistency guarantee.  Or it can be exceptionally weak, by
+only describing that a conflict exists, but still allowing the user to continue
+anyway.
+
+2.  Allow processes to create local (non-persistent) names for I/O contexts.
+These names should be serializable and transferable.
+
+3.  Everything in the entire client should be serializable, further all state
+should be created by the server and transmitted to the client.  That state is
+outstanding until the server receives it again. (i.e. the client closes the
+context successfully.  If a client process crashes, that state is
+lost and the storage system will create a new open context, and track that one
+context for that object/container is lost.  You can them examine the history
+of the object to see what happened.  You can copy/clone the object to reset back
+to a pristine state. 

@@ -1,0 +1,63 @@
+Scalable Object Storage Model
+=============================
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+:doctype: book
+
+
+Definitions
+-----------
+Scalable Object Storage System :: a distributed collection of ObjectStores
+that collaborate to present a complete data storage service to HPC
+applications, system administrators, and data analysis applications.
+
+ObjectStore :: a process or set of processes that performs all the management
+and update operations for a set of containers and objects.  Each ObjectStore
+is seeded with a unique ID, or OSID, that is used in the construction of all
+storage elements within the ObjectStore.
+
+Storage Elements :: A single unit of storage within the ObjectStore described
+by a unique id.  Two types of Storage Elements exist: Containers and Objects.
+
+Containers :: a specialized type of Object that can store Object IDs and
+attributes/annotations for those Objects.
+
+Objects :: The fundamental unit of storage in the Scalable Object Storage
+System.  Objects are write-only until they are marked readable, at which point
+an object becomes read-only.  Objects store a single ordered stream of bytes.
+
+
+Technical Specifications
+------------------------
+OSID - 14 bits -- usually stored in the high order bits 2-16 of a 64-bit field.
+Maximum value stored:  16Ki
+
+OID - 64 bits -- the highest order 2 bits are reserved for system use.  The
+next 14 high-order bits describe the OSID the object is stored inside, and the
+remaining 48-bits uniquely describe the object.
+Maximum value stored: 281Ti
+
+Little-Endian Physical Representation of OID:
+0 ..                                                         63
+xxYYYYYYYYYYYYYzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+
+x - Reserved bits
+Y - OSID bits
+z - bits unique to each Object in an ObjectStore
+
+Technical Notes
+---------------
+1.  Reserving the first 2 bits for the move from 64-bit architectures to larger
+architectures.
+
+2.  I think its pretty easy to figure out how to do a replicated clone.
+Another idea might be to segment the 48 bits somewhat so that scatters and
+gathers can be figured out with some simple bit flipping as well.
+
+Other Notes
+-----------
+1.  No ideas of operations yet.  The discussion of everything as a type of MR
+makes it interesting.  Maybe you have two classes of operations:  Composables,
+and non-composables. Composables are atomics that the server already knows
+about, and non-composables are non-atomics that the system can interrupt at
+any time.

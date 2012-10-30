@@ -1,4 +1,5 @@
 PDF=model.pdf \
+	factors.pdf
 
 IMAGES=
 

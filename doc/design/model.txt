@@ -29,15 +29,15 @@ an object becomes read-only.  Objects store a single ordered stream of bytes.
 
 Technical Specifications
 ------------------------
-OSID - 14 bits -- usually stored in the high order bits 2-16 of a 64-bit field.
+OSID :: 14 bits -- usually stored in the high order bits 2-16 of a 64-bit field.
 Maximum value stored:  16Ki
 
-OID - 64 bits -- the highest order 2 bits are reserved for system use.  The
+OID :: 64 bits -- the highest order 2 bits are reserved for system use.  The
 next 14 high-order bits describe the OSID the object is stored inside, and the
 remaining 48-bits uniquely describe the object.
 Maximum value stored: 281Ti
 
-Little-Endian Physical Representation of OID:
+Little-Endian Physical Representation of OID ::
 0 ..                                                         63
 xxYYYYYYYYYYYYYzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 

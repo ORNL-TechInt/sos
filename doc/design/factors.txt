@@ -1,0 +1,70 @@
+Scalable Object Storage Model
+=============================
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+:doctype: book
+
+
+Introduction
+-----------
+Feiyi pointed out that it may be useful to begin
+
+Important Things
+----------------
+Usefullness :: The goal of this work is to design a useful meaningful systems
+for HPC and Big Data applications.  To that end,
+all design decisions need to be evaluated with:  Is there a use case?
+
+Scalability :: Storage systems incorporating thousands of disks are one key
+element in storing large quantities of data.  Further, leveraging thousands of
+clients simultaneously is also critical to enabling high-performance data
+ingest and analysis.  All design decisions need to be evaluated with:  Will it
+scale?
+
+Performance :: Put simply performance matters.  Existing systems provide the
+storage reliability and capacity required for HPC and Big Data Apps.  The only
+remaining hurdle is performance.  Performance considerations include namespace
+performance, I/O performance, and management performance.  All design
+decisions need to be evaluated with:  Will it perform well?
+
+Locality :: One key idea in our earlier discussions was that storage locality
+matters.  It was one of the critical ideas in enhancing existing storage
+system capabilities.  Locality affects performance and scalability, and brings
+with it interesting namespace and data lifetime and accessibility issues.
+Locality was also one of the key ideas in our replication and QOS schemes.
+All design decisions need to be evaluated with:  How does this enable users to
+access their data with greater locality?
+
+Consistency :: Data consistency in essence assures the user that they interact
+with a view of the storage system that doesn't surprise them.  Unfortunately,
+the easiest models are often the slowesta and least scalable.  All design
+decisions need to be evaluated with:  Will a user be able to interact with the
+data in the storage system effectively?
+
+Unimportant Things
+------------------
+Note: These topics are up for debate.  If it is important, that's fine.  Bring
+a reason it is important, and add it to the above section.
+
+File Formats :: We have discussed log-formatted data, and while this is
+interesting to me personally, it is probably not a critical issue during the
+early phases of the design process.
+
+Specific Media Characteristics :: In general, I don't think the underlying
+media characteristics should be a primary factor in our design.
+
+Other Identified Design Questions
+---------------------------------
+
+What is the maximum size of an object?  Why does it matter?
+
+What is the consistency model?
+
+What does the client interface look like?
+
+When does replication occur?
+
+How does replication occur?
+
+How are QOS notifications distributed?
+

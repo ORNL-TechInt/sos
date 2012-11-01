@@ -68,3 +68,49 @@ How does replication occur?
 
 How are QOS notifications distributed?
 
+Low level capabilities
+----------------------
+Creating objects
+
+Naming Objects
+
+Finding Objects
+
+Streaming data into Objects
+
+Reading data in Objects
+
+Replicating Objects
+
+Splitting objects
+
+Combining objects
+
+Archiving Objects?
+
+Naming groups of objects
+
+Storing metadata of objects
+
+Storing metadata for data ranges?
+
+Removing objects?
+
+Renaming objects?
+
+Notifying applications that I/O may proceed?
+
+High Level Capabilities
+-----------------------
+Storing checkpoint data
+
+Restoring checkpoint data
+
+Reading scientific data for analysis
+
+Reading scientific data for visualization
+
+Performing graph data analysis
+
+Importing data from remote sensor arrays
+

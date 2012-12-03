@@ -1,0 +1,55 @@
+Nuclear Physics Use-Case: Single Nuclei Simulation  
+==============
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+
+Description
+-----------
+
+One of the two primary simulation types in nuclear physics is single nuclei
+simulation.
+
+
+Actors
+------
+
+- MFDN
+- file system
+
+Assumptions
+-----------
+
+MFDn (app name)
+Many Fermion Dynamics-nuclear
+
+
+Steps
+-----------
+
+- prepare single, shared input file, ~ tens of Gigabytes
+
+- specify convergency time, ~ 4 - 12 hours
+
+- specify checkpoint: every tens or hundreds of iterations. The size of
+  checkpoint file grows with the number of iterations.
+
+- runs on full size of the machine
+
+- a group of I/O processes generate a single output file: ~ tens of Tera bytes 
+
+- post-processing is minimal (different from ensemble run) - it may be boils
+  down to a single number.
+
+Variations
+----------
+
+This may qualify as a separate use-case.
+
+Lots of small processes (10,000), each simulate a type of nuclei (3000, known,
+6000 unknown), Very small input file, broadcast to everyone.  each process
+generates a small output file. 
+
+
+Issues
+------
+

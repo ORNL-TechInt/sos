@@ -1,0 +1,60 @@
+Determining Viz Data Provenance From An Archival Image 
+======================================================
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+
+Description
+-----------
+A typical problem that occurs in visualization science is that a scientist
+unaffiliated with the initial visualization sees something of interest in the
+image.  The scientist contacts the team that generated the image and asks
+where the image came from.  At present, this problem is unresolved.  This use
+case describes how it could conceivably be serviced if the storage system
+support existed.
+
+Actors
+------
+Sam, a Nuclear Computational Scientist
+Victor, a Viz Expert
+Derek, a Nuclear Domain Expert
+SOS, an Object Storage System
+VisiT, a visualization toolkit
+Lens, a Viz cluster
+Nuke'em, a Nuclear Science code
+Jaguar, a complute resource
+
+
+Assumptions
+-----------
+A Nuke'em movie from an earlier run exists.  Further all of the data
+associated with the movie still exists within the storage system.
+
+Steps
+-----
+1. Derek sees an old Nuke'Em image from a framecap and is interested to see a
+  different angle than that presented in the movie (to examine a new phenomenon
+  he is interested in).
+2. Derek contacts Samand Victor to request more info about the movie.
+3. Victor is able to use provenance data in the frame cap to identify the
+   movie that the interesting frame came from.
+4. Victor then is able to mine the provenance data associated with the the
+   movie to to identify and locate:
+  a) the reduced data set used to construct the movie,
+  b) the visualization toolkit version and all the relevant information about
+     Lens, the visulization compute platform,
+  c) the raw data set set used during exploratory analysis, and
+  d) he Nuke'em version and all the relevant information about jaguar, the
+  compute resource used to generate the original simulation data
+5. Victor and Sam are able to use the collected provenance data to locate the
+  original data and build a new movie that includes a detailed shot of the
+  region of interest for Derek.
+6.  Derek, Victor, and Sam submit a new journal paper based on this phenomena
+  that results in popular media interest in Nuclear science and makes
+  millionaires of all three.
+
+Variations
+----------
+1.  What provenance data to collect is still up in the air, but basically, collect
+everything.
+2.  The originating image may be a movie or just a screencap.
+ 

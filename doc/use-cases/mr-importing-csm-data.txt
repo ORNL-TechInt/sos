@@ -1,0 +1,63 @@
+Importing the CSM Data into an analysis cluster
+===============================================
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+
+Description
+-----------
+[NOTE]
+This is a draft document - not intended as a deliverable or distribution at
+this point. The goal is to support the model discussion and to capture issues
+raised during the discussions.
+
+source James Horey
+Verbal description of how the CSM data was imported
+
+Actors
+------
+1.  A HDFS storage system
+2.  James, a data expert performing the import
+
+Assumptions
+-----------
+The CSM data is delivered as a series of 600GB EBCDIC encoded files stored in
+mainframe's proprietary DB format.  There were probably roughly 10 of these
+files to begin with.  The files, in general, contained database tables, but the
+tables were not necessarily completely stored within a single file, and many 
+columns within the tables are sparsely populated.
+
+Steps
+-----------
+1.  James develops a process to convert the EBCDIC encoded data into simpler
+CSV files, and processes each of the files.  Size grows from 600GB per file to
+700GB per file.
+  1.1 The process opens a file and begins a sequential scan.  On an as needed
+    basis (to complete a CSV row) additional files are opened and sequentially
+    scanned.
+  1.2 After a large number of rows have been completed, data is written out
+    to the output files in sequential order.  Roughly the same number of rows
+    as were in each original file are written to each output file.  An ASCI
+    based text output  (with encoded commas) in CSV format results in 10 700GB 
+    files (roughly 16% data size increase).
+2. James then uses the available HDFS data import tools to load the CSV data
+into a 48 node (1 master, 47 slaves) Hadoop cluster.
+  2.1 Using the standard CSV loading tools, the input data is converted into
+    an RCFile format (a relational columnar file format) stored with LZO
+    compression in triplicate (the process is effectively opaque).  The data
+    is stored on 24 nodes of the Hadoop cluster.  Each data file is 150-300GB
+    with a total (unreplicated) data size of 12TB.
+3. James then prepares the entire cluster for analysis.
+  3.1  Segements of the RCFile-format data is futherer replicated to additional
+  nodes in the Hadoop cluster to support some I/O intensive analysis code.
+
+
+Variations
+----------
+1.  The RCFile data can be replicated further to enable analysis on up to 47
+nodes.
+
+Issues
+------
+1.  
+
+

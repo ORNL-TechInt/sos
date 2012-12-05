@@ -1,0 +1,78 @@
+Use Case Title
+==============
+:latex-use-bibliography-environment:
+:latex-use-running-title-headings:
+
+Description
+-----------
+[NOTE]
+Sample description of how to run the CESM model code and its storage access
+patterns during a run.  Specifically it produces checkpoint files and history
+files for later use.
+
+source Valentine XXX and Feiyi Want
+Sample description of how to run the CESM model code and its storage access
+patterns during a run.
+
+Actors
+------
+Cal, a computational climate scientist
+SOS, a scalable storage system
+Titan, a leadership class computing system
+PIO, a popular I/O middleware layer for storage access
+CESM, a climate earth system modelling simulation code
+
+Assumptions
+-----------
+The storage system holds a 1MB input deck.
+
+Steps
+-----------
+1.  Cal, a grizzled climate veteran, initiates a job to determine if the
+current weather patterns will result in a climate 6 months for now that is 
+incompatible wih his desire to play golf every weekend.
+
+2.  Cal constructs a model run for CESM by selecting a Land model, Sea model,
+and atmosphere model to couple within his simulation run.  He launches this job on
+Tital, a large leadership class computing system.
+
+3.  The job spawns on ~40,000 cores (~16 cores/node) with a 6 hour run time limit.  Each core is dedicated to only one of the coupled models (i.e. atmosphere OR ice, not both).
+
+4.  Process 0 reads a 1MB input deck from the storage system, and broadcasts initial system settings to all processes.
+
+5.  Cal has configured the CESM code to generate history files summarizing the climate results for specific areas at 1 month intervals of simulated time passage.  In this case, Cal intends to submit the results to IPCC standards bodies and is thus generating output in the NetCDF file format with the CF convention.
+  5.1  At 1 month simulated intervals, each component opens its own NetCDF data volume (using middleware) and writes the data for the selected areas, averaged over the selected time interval.
+    5.1.1  Each component selects 200 processes to act as writers of the single NetCDF volume per component which is composed of 267 total files.
+    5.1.2  The total NetCDF volume size per history output is 586GB with each process contributing roughly 1.2GB to the total dataset size.
+    5.1.3  NetCDF variables are written using roughly 128K contiguous writes.
+
+  5.2 Additionally, each component selects a single writer to generate a log file over the course of the run.  Individual log writes of approximately 64K.
+
+  5.3 On an hourly wall clock basis the components all generate a coordinated
+      checkpoint file in a valid restart format based on the middleware used
+      to output the checkpoint data.
+    5.3.1 Each component simultaneously writes the checkpoint with its 200 
+      elected writers.  The output data is written as 100s of files, with each
+      file roughly 150-250MB in size.  Files are written using large streaming
+      writes in excess of 1MB per write.
+
+6.  When the wall clock limit is reached, the job terminates.
+
+
+Variations
+----------
+Any variations in the steps of the use cases
+1. History area size is configurable and controls history file size.
+2. History time interval is configurable, and controls number of files?
+3. Checkpoint times are configurable (want 5 minute checkpoints once an hour)
+
+
+Issues
+------
+List of issues remaining to be resolved
+1.  How many writers per component?  It's configurable?
+2.  Are these file sizes reasonable?
+3.  Are the file write sizes (128KB, 64KB, 1MB) reasonable?
+4.  Is the input deck size reasonable?
+5.  Is the input deck bcasted?
+6.  Is the number of files in the "volume" configurable?
